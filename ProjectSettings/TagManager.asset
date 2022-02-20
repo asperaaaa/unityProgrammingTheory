@@ -6,6 +6,8 @@ TagManager:
   tags:
   - UnitA
   - UnitB
+  - HomeA
+  - HomeB
   layers:
   - Default
   - TransparentFX

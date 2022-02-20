@@ -9,11 +9,11 @@ public class UnitB : Unit
 
     void Update()
     {
-        SearchEnemy();
+        SearchTarget();        
     }
 
     //POLYMORPHISM
-    protected override void SearchEnemy()
+    protected override void SearchTarget()
     {
         GameObject[] targets = GetListEnemies();
 

@@ -4,16 +4,16 @@ using UnityEngine;
 
 // INHERITANCE
 public class UnitA : Unit
-{    
+{
     private string u_EnemyTag = "UnitB";
-    
+
     void Update()
     {
-        SearchEnemy();
+        SearchTarget();        
     }
 
     //POLYMORPHISM
-    protected override void SearchEnemy()
+    protected override void SearchTarget()
     {
         GameObject[] targets = GetListEnemies();
 
