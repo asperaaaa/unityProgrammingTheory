@@ -1,14 +1,8 @@
 ﻿<Properties StartupConfiguration="{B7783189-E957-6D33-929E-BEBAAF8C15F9}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UnitB.cs">
-    <Files>
-      <File FileName="Assets/Scripts/Unit.cs" Line="8" Column="12" />
-      <File FileName="Assets/Scripts/UnitA.cs" Line="4" Column="1" NotebookId="1" />
-      <File FileName="Assets/Scripts/UnitB.cs" Line="1" Column="1" NotebookId="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Unit.cs" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="25d466ca-2133-4817-a192-fd5387924a43" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bc01ea26-530f-4bb2-9996-f3d48391ccf5" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
