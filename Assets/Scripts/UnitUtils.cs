@@ -41,4 +41,19 @@ public class UnitUtils : MonoBehaviour
         line.SetPosition(0, from.transform.position);
         line.SetPosition(1, to.transform.position);
     }
+
+    public static void CleanLine(GameObject from)
+    {
+        LineRenderer line = from.GetComponent<LineRenderer>();
+        if (line)
+        {
+            line.enabled = false;
+        }      
+    }
+
+    public static bool TossCoin()
+    {
+        int coin = Random.Range(0, 2);
+        return coin == 1;
+    }
 }

@@ -5,18 +5,29 @@ using UnityEngine;
 public class Soldier : Unit
 {
     public bool s_IsAttacking;
-
+    private bool s_IsResting;
     void Update()
     {
-        if (u_IsCloseToTarget)
+        CheckIfIsDied();
+
+        if (IsDied)
         {
-            StartAttack();
+            s_IsAttacking = false;
         }
         else
         {
-            StopAttack();
-            SearchTarget();
+            if (u_IsCloseToTarget)
+            {
+                StartAttack();
+                checkIfEnemyDied();
+            }
+            else
+            {
+                StopAttack();
+                SearchTarget();
+            }
         }
+        
     }
 
     //POLYMORPHISM
@@ -57,12 +68,40 @@ public class Soldier : Unit
     {
         s_IsAttacking = true;
         u_Rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-        //UnitUtils.DrawLine(gameObject, u_Enemy);
+
+        bool hitEnemy = UnitUtils.TossCoin();
+
+        if (s_IsResting)
+        {
+            return;
+        }
+
+        if (hitEnemy)
+        {
+            u_Enemy.gameObject.GetComponent<Soldier>().u_Life -= 20; 
+        }
+        StartCoroutine(Resting());
     }
 
     void StopAttack()
     {
         s_IsAttacking = false;
         u_Rb.constraints = RigidbodyConstraints.None;
+    }
+
+    void checkIfEnemyDied()
+    {
+        if (u_Enemy.gameObject.GetComponent<Soldier>().IsDied)
+        {
+            u_Enemy = null;
+            u_IsCloseToTarget = false;
+        }
+    }
+
+    IEnumerator Resting()
+    {
+        s_IsResting = true;
+        yield return new WaitForSeconds(1);
+        s_IsResting = false;
     }
 }

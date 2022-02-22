@@ -6,30 +6,25 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
+    public int u_Life = 100;    
+    public GameObject u_Home;
+    public string u_EnemyTag;
 
-    [SerializeField]
-    private GameObject u_Home;
-    [SerializeField]
-    private int u_Life = 100;
     private float u_GoToEnemySpeed = 3.0f;
     private float u_GoToHomeSpeed = 1.0f;
     private float u_DieDimension = 0.01f;
-    private bool u_IsAtHome;
+    [SerializeField]
+    private bool u_IsAtHome;    
     private bool u_IsDied = false;
-
-    [SerializeField]
-    protected bool u_IsCloseToTarget;
-    [SerializeField]
-    protected string u_EnemyTag;
-    [SerializeField]
-    protected GameObject u_Enemy = null;
-    protected Rigidbody u_Rb;
     
+    protected bool u_IsCloseToTarget;
+    protected GameObject u_Enemy = null;
+    protected Rigidbody u_Rb;    
 
     public bool IsDied
     {
         get { return u_IsDied; }
-    }
+    }    
 
     void Awake()
     {
@@ -41,9 +36,7 @@ public abstract class Unit : MonoBehaviour
 
     //POLYMORPHISM
     protected virtual void GoTo(GameObject target)
-    {
-        CheckIfIsDied();
-
+    {        
         if (!u_IsDied)
         {            
             UnitUtils.DrawLine(gameObject, target);
@@ -54,13 +47,13 @@ public abstract class Unit : MonoBehaviour
 
     //POLYMORPHISM
     protected virtual void GoTo()
-    {
-        CheckIfIsDied();
+    {        
         if (!u_IsAtHome && !u_IsDied)
         {            
             float lookZDirection = Mathf.Sign(u_Home.transform.position.z - transform.position.z);
             Vector3 lookDirection = lookZDirection * Vector3.forward;
-            u_Rb.AddForce(lookDirection * u_GoToHomeSpeed);            
+            u_Rb.AddForce(lookDirection * u_GoToHomeSpeed);
+            UnitUtils.CleanLine(gameObject);
         }
     }
 
@@ -70,7 +63,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     // ABSTRACTION
-    void CheckIfIsDied()
+    public void CheckIfIsDied()
     {
         if (u_Life < 1)
         {
@@ -87,12 +80,12 @@ public abstract class Unit : MonoBehaviour
         SphereCollider u_SC = GetComponent<SphereCollider>();
         u_SC.radius = u_DieDimension;
         transform.localScale = new Vector3(1, u_DieDimension, 1);
+        UnitUtils.CleanLine(gameObject);
     }
 
     void OnTriggerEnter(Collider other)
-    {
-        string u_HomeTag = u_Home.gameObject.tag;
-        if (other.gameObject.CompareTag(u_HomeTag))
+    {        
+        if (other.gameObject.name == u_Home.gameObject.name)
         {
             u_IsAtHome = true;
         }
@@ -105,16 +98,22 @@ public abstract class Unit : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        string u_HomeTag = u_Home.gameObject.tag;
-        if (other.gameObject.CompareTag(u_HomeTag))
+        if (other.gameObject.name == u_Home.gameObject.name)
         {
             u_IsAtHome = false;
         }
-
         
         if (u_Enemy != null && u_Enemy.name == other.gameObject.name)
         {
          u_IsCloseToTarget = false;
         }        
-    }   
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (u_Enemy != null && u_Enemy.name == other.gameObject.name)
+        {
+            u_IsCloseToTarget = true;
+        }
+    }
 }
